@@ -27,8 +27,8 @@ jQuery(document).ready(function($) {
 			 	data: { 'dx_url_for_ajax': ajax_field_value },
 		             action: 'fetch_ajax_url_http'
 				 }, function(status) {
-					 	 $('#dx_page_messages').html('The URL title is fetching in the frame below');
-					 	 $('#resource-window').html( '<p>Site title: ' + status + '</p>');
+					 	 $('#dx_page_messages').html('The items are being fetched...');
+					 	 $('#resource-window').html( '<p>Top 10 Results: ' + status + '</p>');
 		           }
 		);
 	});
