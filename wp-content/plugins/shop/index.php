@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:   In Shop
+ * Plugin Name:   Shop
  * Description:   DevriX Assignment - Shop
  * Author:        Bojidar Valchovski
  * Version:       1.0.0
@@ -35,9 +35,6 @@ class In_Shop {
 		
 		// register admin pages for the plugin
 		add_action( 'admin_menu', array( $this, 'dx_admin_pages_callback' ) );
-		
-		// Add earlier execution as it needs to occur before admin page display
-		add_action( 'admin_init', array( $this, 'dx_register_settings' ), 5 );
 		
 		// register admin pages for the plugin
 		add_action( 'admin_menu', array( $this, 'dx_admin_pages_callback' ) );
@@ -83,9 +80,8 @@ class In_Shop {
 	 *  
 	 */
 	public function dx_admin_pages_callback() {
-		add_menu_page(__( "In Shop", 'dxbase' ), __( "In Shop", 'dxbase' ), 'edit_themes', 'dx-plugin-base', array( $this, 'dx_plugin_base' ) );		
-		add_submenu_page( 'dx-plugin-base', __( "Base Subpage", 'dxbase' ), __( "Base Subpage", 'dxbase' ), 'edit_themes', 'dx-base-subpage', array( $this, 'dx_plugin_subpage' ) );
-		add_submenu_page( 'dx-plugin-base', __( "Remote Subpage", 'dxbase' ), __( "Remote Subpage", 'dxbase' ), 'edit_themes', 'dx-remote-subpage', array( $this, 'dx_plugin_side_access_page' ) );
+		add_menu_page(__( "Shop", 'dxbase' ), __( "Shop", 'dxbase' ), 'edit_themes', 'dx-plugin-base', array( $this, 'dx_plugin_base' ) );		
+		add_submenu_page( 'dx-plugin-base', __( "Fetch Amazon List", 'dxbase' ), __( "Fetch Amazon List", 'dxbase' ), 'edit_themes', 'dx-remote-subpage', array( $this, 'dx_plugin_side_access_page' ) );
 	}
 	
 	/**
@@ -99,33 +95,6 @@ class In_Shop {
 	
 	public function dx_plugin_side_access_page() {
 		include_once( DXP_PATH_INCLUDES . '/remote-page-template.php' );
-	}
-
-	/**
-	 * 
-	 * The content of the subpage 
-	 * 
-	 * Use some default UI from WordPress guidelines echoed here (the sample above is with a template)
-	 * 
-	 * @see http://www.onextrapixel.com/2009/07/01/how-to-design-and-style-your-wordpress-plugin-admin-panel/
-	 *
-	 */
-	public function dx_plugin_subpage() {
-		echo '<div class="wrap">';
-		_e( "<h2>DX Plugin Subpage</h2> ", 'dxbase' );
-		_e( "I'm a subpage and I know it!", 'dxbase' );
-		echo '</div>';
-	}
-
-	/**
-	 * Initialize the Settings class
-	 * 
-	 * Register a settings section with a field for a secure WordPress admin option creation.
-	 * 
-	 */
-	public function dx_register_settings() {
-		require_once( DXP_PATH . '/dx-plugin-settings.class.php' );
-		new DX_Plugin_Settings();
 	}
 	
 	/**
