@@ -25,11 +25,6 @@ class In_Shop {
 	 * Assign everything as a call from within the constructor
 	 */
 	public function __construct() {
-		// add script and style calls the WP way 
-		// it's a bit confusing as styles are called with a scripts hook
-		// @blamenacin - http://make.wordpress.org/core/2011/12/12/use-wp_enqueue_scripts-not-wp_print_styles-to-enqueue-scripts-and-styles-for-the-frontend/
-		add_action( 'wp_enqueue_scripts', array( $this, 'dx_add_JS' ) );
-		
 		// add scripts and styles only available in admin
 		add_action( 'admin_enqueue_scripts', array( $this, 'dx_add_admin_JS' ) );
 		
@@ -44,20 +39,6 @@ class In_Shop {
 		add_action( 'wp_ajax_store_ajax_value', array( $this, 'store_ajax_value' ) );
  		add_action( 'wp_ajax_fetch_ajax_url_http', array( $this, 'fetch_ajax_url_http' ) );
 	}
-	/**
-	 * 
-	 * Adding JavaScript scripts
-	 * 
-	 * Loading existing scripts from wp-includes or adding custom ones
-	 * 
-	 */
-	public function dx_add_JS() {
-		wp_enqueue_script( 'jquery' );
-		// load custom JSes and put them in footer
-		wp_register_script( 'samplescript', plugins_url( '/js/samplescript.js' , __FILE__ ), array('jquery'), '1.0', true );
-		wp_enqueue_script( 'samplescript' );
-	}
-	
 	
 	/**
 	 *
@@ -122,9 +103,11 @@ class In_Shop {
 			}
 			
 			if( isset( $response['body'] ) ) {
-				if( preg_match_all( '/<h2.*>(.*)<\/h2>/', $response['body'], $matches ) ) {
+				if( preg_match_all( '/<a.*title="(.*?)".*<\/a>/', $response['body'], $matches ) ) {
+					echo '</br>';
 					for ( $i = 0 ; $i < 10 ; $i++ ) {
-						echo $matches[0][$i];
+						echo $matches[1][$i] ;
+						echo '</br>';
 					}
 					die();
 				}
