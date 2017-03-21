@@ -153,9 +153,10 @@ class In_Shop {
 			}
 			
 			if( isset( $response['body'] ) ) {
-				if( preg_match( '/<h2 data-attribute="(.*)"/', $response['body'], $matches ) ) {
-					var_dump($matches);
-					echo json_encode( $matches[1] );
+				if( preg_match_all( '/<h2.*>(.*)<\/h2>/', $response['body'], $matches ) ) {
+					for ( $i = 0 ; $i < 10 ; $i++ ) {
+						echo $matches[0][$i];
+					}
 					die();
 				}
 			}
