@@ -28,7 +28,7 @@ jQuery(document).ready(function($) {
 		             action: 'fetch_ajax_url_http'
 				 }, function(status) {
 					 	 $('#dx_page_messages').html('The items are being fetched...');
-					 	 $('#resource-window').html( '<p>Top 10 Results: ' + status + '</p>');
+					 	 $('#resource-window').html( '<p>Top 10 Results: </br>' + status + '</p>');
 		           }
 		);
 	});

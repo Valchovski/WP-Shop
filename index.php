@@ -95,6 +95,15 @@ class In_Shop {
 		if( isset( $_POST['data'] ) && isset( $_POST['data']['dx_url_for_ajax'] ) ) {
 			$ajax_url = $_POST['data']['dx_url_for_ajax'];
 			
+			if( isset( $ajax_url ) ) {
+				if ( preg_match_all( '/^(?:https?:)?(?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/', $ajax_url, $domain ) ) {
+					if ($domain[1][0] != 'amazon.com') {
+						echo json_encode( __( 'Please provide a valid amazon.com link', 'dxbase' ) );
+						die();
+					}
+				}
+			}
+			
 			$response = wp_remote_get( $ajax_url );
 			
 			if( is_wp_error( $response ) ) {
@@ -102,11 +111,11 @@ class In_Shop {
 				die();
 			}
 			
+			
 			if( isset( $response['body'] ) ) {
-				if( preg_match_all( '/<a.*title="(.*?)".*<\/a>/', $response['body'], $matches ) ) {
-					echo '</br>';
+				if( preg_match_all( '/<a.*title="(.*?)".*href="(.*?)".*<\/a>/', $response['body'], $matches ) ) {
 					for ( $i = 0 ; $i < 10 ; $i++ ) {
-						echo $matches[1][$i] ;
+						echo '<a href="' . $matches[2][$i] . '">' . $matches[1][$i] . "</a>";
 						echo '</br>';
 					}
 					die();
